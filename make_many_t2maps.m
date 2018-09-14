@@ -19,6 +19,7 @@ mask=squeeze(data(:,:,1,:,:)>4*mean(mean(data(2:6,2:6,1,:))));
 for n=1:size(data,5)
     for i=1:size(data,4)
         [t2map(:,:,i,n),S0map(:,:,i,n)]=make_one_t2map(squeeze(data(:,:,:,i,n)),mask(:,:,n),size(data,1),te);
+        disp(i)
     end
 end
 

@@ -25,9 +25,18 @@ loc(zerotcourse,:)=[];%Delete zero location
 
 parfor i=1:x
 %for i=1:x
+
+    warnStruct = warning('off','curvefit:cfit:subsasgn:coeffsClearingConfBounds');
+
     cfit{i}=T2fitting(tcourses(i,:),te,'off'); %fit time course to Animal_T2...
 %    S0(i)=cfit{i}.S0;t2(i)=cfit{i}.T2star;
     S0(i)=cfit{i}.S0;t2(i)=cfit{i}.T2;
+%     if rem(i,1000)==0
+%         disp(i);
+%     end
+    
+  warning(warnStruct);
+  
 end
 
 %ana_new=imresize(imga,[matr,matr]);

@@ -16,14 +16,17 @@ clear;
 clc;
 %% load data and header information
 %dirname=uigetdir; % location of dicom files
-dirname = '\Users\jihun\Documents\BOLD_TOLD\Data\247\BOLD 247';
+%dirname = '\Users\jihun\Documents\BOLD_TOLD\Data\247\BOLD 247';
+dirname = '\Users\jihun\Documents\BOLD_TOLD\Data\249\BOLD 249';
+%dirname_crop = '\Users\jihun\Documents\MATLAB\MyImagingLab_T2map_dicom-master\output\247'; %J edit
+dirname_crop = '\Users\jihun\Documents\MATLAB\MyImagingLab_T2map_dicom-master\output\249'; %J edit
+
 [new_T,~]=dicom_info_field({'EchoTime','SliceLocation'},dirname);
 te=unique(new_T.EchoTime,'stable');
 numofslice=length(unique(new_T.SliceLocation));
 % numofslice=3; % make sure number of slice is correct;
 %data=dicomread_dir(dirname);
 
-dirname_crop = '\Users\jihun\Documents\MATLAB\MyImagingLab_T2map_dicom-master\output\247'; %J edit
 data=dicomread_dir(dirname_crop); %J edit
 
 % te=5:7:68; % make sure te is correct;
@@ -65,6 +68,11 @@ for i=1:size(t2map,4)
     subplot(1,2,2);plot(values(:,:,i),'LineWidth',2);
     axis_setting1; title('Dynamic T2')
     saveas(gcf,strcat(dirname_crop,'\results\plot_s',num2str(i),'.tif'))
-    %xlswrite(strcat(dirname_crop,'\results\ROI_values.xlsx'),values(:,:,i),i,'A1');%J: Original code
-    xlswrite(strcat(dirname_crop, '\results\ROI_values.xlsx'),values(:,:,i),i,'A1');%J: This works for cropped figures
+    
+    %J: Original code
+    %xlswrite(strcat(dirname_crop,'\results\ROI_values.xlsx'),values(:,:,i),i,'A1');
+    
+    %J: This works for cropped figures
+    out(:,i) = (values(:,:,i));
+    xlswrite(strcat('\results\ROI_values.xlsx'),out,'A1');
 end
